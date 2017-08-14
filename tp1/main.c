@@ -27,7 +27,6 @@ int main(char argc, char *argv[]){
     int ans;
     
     char *test1[] = {"-a","b","c","-e","f","-hf","a"};
-  
     
     ans = parseCmdLine(sz(test1), test1, parseCallback,NULL);
     check(ans,1,4);
@@ -49,6 +48,10 @@ int main(char argc, char *argv[]){
     char *test5[]={"NAME", "-key","-key", "param"}; // Error
     ans = parseCmdLine( sz(test5), test5, parseCallback,NULL);
     check(ans,5,3);
+    
+    char *test6[]={"-Hola", "mundo","-hola", "mundo","test","-hola","hola","-hola","test","test"}; // Sucess
+    ans = parseCmdLine( sz(test5), test5, parseCallback,NULL);
+    check(ans,6,6);
     
 }
 
