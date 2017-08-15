@@ -25,7 +25,7 @@ int main(char argc, char *argv[]){
     
     int ans;
     
-    char *test1[] = {"-a","b","c","-e","f","-hf","a"};
+    char *test1[] = {"NAME","-a","b","c","-e","f","-hf","a"};
     
     ans = parseCmdLine(sz(test1), test1, parseCallback,NULL);
     check(ans,1,4);
@@ -46,17 +46,17 @@ int main(char argc, char *argv[]){
     
     char *test5[]={"NAME", "-key","-key", "param"}; // Error
     ans = parseCmdLine( sz(test5), test5, parseCallback,NULL);
-    check(ans,5,3);
+    check(ans,5,2);
     
-    char *test6[]={"-Hola", "mundo","-hola", "mundo","test","-hola","hola","-hola","test","test"}; // Sucess
+    char *test6[]={"NAME","-Hola", "mundo","-hola", "mundo","test","-hola","hola","-hola","test","test"}; // Sucess
     ans = parseCmdLine( sz(test6), test6, parseCallback,NULL);
     check(ans,6,6);
     
-    char *test7[]={"parser","--aw","34gy5","ahchehv3","---54d","hu687","hjgdyt"};
+    char *test7[]={"NAME","parser","--aw","34gy5","ahchehv3","---54d","hu687","hjgdyt"};
     ans = parseCmdLine( sz(test7), test7, parseCallback,NULL);
     check(ans,7,5);
     
-    char *test8[]={"parser","-f","34gy5","-rt"};
+    char *test8[]={"NAME","parser","-f","34gy5","-rt"};
     ans = parseCmdLine( sz(test8), test8, parseCallback,NULL);
     check(ans,8,-1);
     
@@ -73,7 +73,6 @@ int main(char argc, char *argv[]){
     Sucess on test 2
     Sucess on test 3
     Sucess on test 4
-    called [NAME]=[(null)]
     called [key]=[-key]
     called [param]=[(null)]
     Sucess on test 5
@@ -91,6 +90,7 @@ int main(char argc, char *argv[]){
     called [hjgdyt]=[(null)]
     Sucess on test 7
     Sucess on test 8
+
 
      */
     
