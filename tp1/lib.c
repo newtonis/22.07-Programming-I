@@ -37,7 +37,7 @@ int parseCmdLine(int argc,char *argv[], pCallback p,void *userData){
     
     char *buffer;
     
-    for (int i = 0;i < argc;i++){
+    for (int i = 1;i < argc;i++){
         switch (estado){
             case BUSCAR_INICIAL:
                 if (argv[i][0] == '-'){
