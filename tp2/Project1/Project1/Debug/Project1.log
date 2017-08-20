@@ -1,0 +1,6 @@
+﻿  mandelbrot.c
+c:\users\newtonis\documents\visual studio 2015\projects\project1\project1\mandelbrot.c(30): warning C4101: 'test': unreferenced local variable
+c:\users\newtonis\documents\visual studio 2015\projects\project1\project1\mandelbrot.c(70): warning C4013: 'printf' undefined; assuming extern returning int
+c:\users\newtonis\documents\visual studio 2015\projects\project1\project1\mandelbrot.c(80): warning C4101: 'cor': unreferenced local variable
+  Project1.vcxproj -> c:\Users\newtonis\documents\visual studio 2015\Projects\Project1\Debug\Project1.exe
+  Project1.vcxproj -> c:\Users\newtonis\documents\visual studio 2015\Projects\Project1\Debug\Project1.pdb (Partial PDB)
