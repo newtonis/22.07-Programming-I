@@ -16,6 +16,7 @@
 
 
 const char * manderbrot_params[] = { "type","x0","y0","xf","yf" };
+const char * triang_params[] = { "type","lstart","lend","x0","y0","leftangle","rightangle" };
 
 const int SCREEN_WIDTH  = 800;
 const int SCREEN_HEIGHT = 600;
@@ -42,14 +43,25 @@ int main(int argv , char *argc[]){
 		getchar();
 		return 0;
 	}
-	if (strcmp(data.type, "manderbrot") == 0){
-		if (!check_params(&data, manderbrot_params,sizeof(manderbrot_params)/sizeof(char*) )) {
+	if (strcmp(data.type, "manderbrot") == 0) {
+		if (!check_params(&data, manderbrot_params, sizeof(manderbrot_params) / sizeof(char*))) {
 			printf("Invalid manderbrot parameters \n");
 			getchar();
 			return 0;
 		}
 		if (!verify_mandelbrot(&data)) {
 			printf("Invalid manderbrot intervals\n");
+			getchar();
+			return 0;
+		}
+	}else if (strcmp(data.type, "triangle") == 0) {
+		if (!check_params(&data, triang_params, sizeof(triang_params) / sizeof(char*))) {
+			printf("Invalid triangle parameters \n");
+			getchar();
+			return 0;
+		}
+		if (!verify_triang(&data)) {
+			printf("Invalid triangle intervals \n");
 			getchar();
 			return 0;
 		}
@@ -84,6 +96,8 @@ int main(int argv , char *argc[]){
 	if (strcmp(data.type, "manderbrot") == 0) {
 
 		draw_mandelbrot((void*)&data);
+	}else if (strcmp(data.type, "triangle") == 0) {
+		plot_triangle(&data);
 	}
 
 
@@ -131,13 +145,13 @@ int parseCallback(char* key, char* data, void* userdata) {
 		udata->xf = strtof(data, &endptr);
 	}else if (strcmp(key, "yf") == 0) {
 		udata->yf = strtof(data, &endptr);
-	}else if (strcmp(key, "lstart")) {
+	}else if (strcmp(key, "lstart") == 0) {
 		udata->lStart = (int)strtol(data, &endptr, 10);
 	}else if (strcmp(key, "lend") == 0) {
 		udata->lEnd = (int)strtol(data, &endptr, 10);
-	}else if (strcmp(key, "leftangle")) {
+	}else if (strcmp(key, "leftangle") == 0) {
 		udata->leftAngle = strtof(data, &endptr);
-	}else if(strcmp(key,"rightangle")){
+	}else if(strcmp(key,"rightangle") == 0){
 		udata->rightAngle = strtof(data, &endptr);
 	}else {
 		udata->error = 1;

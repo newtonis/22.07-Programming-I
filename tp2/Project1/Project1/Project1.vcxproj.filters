@@ -36,6 +36,9 @@
     <ClCompile Include="common_structs.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="triag.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="complex.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="triag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

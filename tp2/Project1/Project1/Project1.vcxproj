@@ -130,12 +130,14 @@
     <ClCompile Include="mandelbrot.c" />
     <ClCompile Include="real_main.c" />
     <ClCompile Include="common_structs.c" />
+    <ClCompile Include="triag.c" />
     <ClCompile Include="utils.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common_structs.h" />
     <ClInclude Include="complex.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="triag.h" />
     <ClInclude Include="lib_parser.h" />
     <ClInclude Include="mandelbrot.h" />
     <ClInclude Include="utils.h" />

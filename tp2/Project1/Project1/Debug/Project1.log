@@ -1,6 +1,2 @@
-﻿  real_main.c
-f:\itba_eda_tps\tp2\project1\project1\real_main.c(46): warning C4090: 'function': different 'const' qualifiers
-f:\itba_eda_tps\tp2\project1\project1\real_main.c(121): warning C4047: 'function': 'parameter_data *' differs in levels of indirection from 'parameter_data **'
-f:\itba_eda_tps\tp2\project1\project1\real_main.c(121): warning C4024: 'find_in_data': different types for formal and actual parameter 2
-  Project1.vcxproj -> F:\ITBA_EDA_TPS\tp2\Project1\Debug\Project1.exe
+﻿  Project1.vcxproj -> F:\ITBA_EDA_TPS\tp2\Project1\Debug\Project1.exe
   Project1.vcxproj -> F:\ITBA_EDA_TPS\tp2\Project1\Debug\Project1.pdb (Partial PDB)
