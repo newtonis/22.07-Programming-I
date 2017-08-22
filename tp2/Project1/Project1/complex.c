@@ -2,13 +2,6 @@
 #include <stdio.h>
 #include <math.h>
 
-int max(double a, double b) {
-	if (a > b) {
-		return a;
-	}else {
-		return b;
-	}
-}
 
 complex_t init_complex(double re, double im) {
 	complex_t ans;

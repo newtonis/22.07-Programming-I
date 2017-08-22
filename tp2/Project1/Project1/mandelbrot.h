@@ -1,6 +1,7 @@
 #ifndef MANDELBROT_H
 #define MANDELBROT_H
 
+#include <allegro5/allegro_color.h>
 #include "common_structs.h"
 #include "complex.h"
 

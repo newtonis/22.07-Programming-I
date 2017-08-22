@@ -11,8 +11,8 @@
 
 /// Complex limits
 const double MIN_X = -100.0; 
-const double MIN_Y =  100.0;
-const double MAX_X = -100.0;
+const double MIN_Y = -100.0;
+const double MAX_X =  100.0;
 const double MAX_Y =  100.0;
 
 enum {VARIABLE_X , VARIABLE_Y };
@@ -44,15 +44,15 @@ int verify_range(double position,int type){
 }
 
 int verify_mandelbrot(parameter_data *data){
-    parameter_data vars = *data;
+   
     int success = 1;
-    success = success && verify_range(vars.x0,VARIABLE_X);
-    success = success && verify_range(vars.y0,VARIABLE_Y);
-    success = success && verify_range(vars.xf,VARIABLE_X);
-    success = success && verify_range(vars.yf,VARIABLE_Y);
+    success = success && verify_range(data->x0,VARIABLE_X);
+    success = success && verify_range(data->y0,VARIABLE_Y);
+    success = success && verify_range(data->xf,VARIABLE_X);
+    success = success && verify_range(data->yf,VARIABLE_Y);
     
-    success = success && vars.xf > vars.x0;
-    success = success && vars.yf > vars.y0;
+    success = success && data->xf > data->x0;
+    success = success && data->yf > data->y0;
     
     return success;    
 }

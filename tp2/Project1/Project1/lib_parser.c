@@ -35,7 +35,7 @@ int parseCmdLine(int argc,char *argv[], pCallback p,void *userData){
     
     t_action** actions = malloc(sizeof(t_action*)*argc); // nunca tendremos mas de argc acciones 
     
-    char *buffer;
+	char *buffer = NULL;
     
     for (int i = 1;i < argc;i++){
         switch (estado){

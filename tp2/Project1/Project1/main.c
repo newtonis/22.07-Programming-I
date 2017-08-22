@@ -34,8 +34,7 @@ int main2(int argc , char *argv[]) {
 
     al_clear_to_color(al_map_rgb(0, 0, 0));
     
-    
-    parameter_data data;
+ 
     data.x0 = -2;
     data.y0 = -2;
     data.xf = 2;
