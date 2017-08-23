@@ -13,10 +13,11 @@
 #include "lib_parser.h"
 #include "utils.h"
 #include "mandelbrot.h"
-
+#include "octogon.h"
 
 const char * manderbrot_params[] = { "type","x0","y0","xf","yf" };
 const char * triang_params[] = { "type","lstart","lend","x0","y0","leftangle","rightangle" };
+const char * octogon_params[] = { "type","lstart","lend","x0","y0","lconstant"};
 
 const int SCREEN_WIDTH  = 800;
 const int SCREEN_HEIGHT = 600;
@@ -24,9 +25,14 @@ const int FPS = 40;
 
 int parseCallback(char* key, char* data, void* userdata);
 
-
+/*** Testing examples 
+	-type Octogon -lStart 300 -lEnd 30 -lConstant 0.5 -x0 450 -y0 45
+***/
 int main(int argv , char *argc[]){
     parameter_data data;
+	data.xMax = SCREEN_WIDTH;
+	data.yMax = SCREEN_HEIGHT;
+
 	init_data(&data);
 
     int parser_success = parseCmdLine(argv,argc,parseCallback,(void*)&data);
@@ -65,6 +71,17 @@ int main(int argv , char *argc[]){
 			getchar();
 			return 0;
 		}
+	}else if(strcmp(data.type,"octogon") == 0){
+		if (!check_params(&data, &octogon_params, sizeof(octogon_params) / sizeof(char*))) {
+			printf("Invalid octogon parameters \n");
+			getchar();
+			return 0;
+		}
+		if (!validacion_fractal_octogonal(&data)) {
+			printf("Invalid octogon parameters \n");
+			getchar();
+			return 0;
+		}
 	}else {
 		printf("No valid type selected \n");
 		getchar();
@@ -90,14 +107,14 @@ int main(int argv , char *argc[]){
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 
-	data.xMax = SCREEN_WIDTH;
-	data.yMax = SCREEN_HEIGHT;
+
 
 	if (strcmp(data.type, "manderbrot") == 0) {
-
 		draw_mandelbrot((void*)&data);
 	}else if (strcmp(data.type, "triangle") == 0) {
 		plot_triangle(&data);
+	}else if (strcmp(data.type, "octogon") == 0) {
+		draw_octogonal_fractal(&data);
 	}
 
 
@@ -151,8 +168,10 @@ int parseCallback(char* key, char* data, void* userdata) {
 		udata->lEnd = (int)strtol(data, &endptr, 10);
 	}else if (strcmp(key, "leftangle") == 0) {
 		udata->leftAngle = strtof(data, &endptr);
-	}else if(strcmp(key,"rightangle") == 0){
+	}else if (strcmp(key, "rightangle") == 0) {
 		udata->rightAngle = strtof(data, &endptr);
+	}else if(strcmp(key,"lconstant") == 0){
+		udata->lConstant = strtof(data, &endptr);
 	}else {
 		udata->error = 1;
 		return 0; // error, invalid parameter

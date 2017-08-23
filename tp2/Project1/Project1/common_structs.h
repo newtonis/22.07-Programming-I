@@ -2,13 +2,15 @@
 #ifndef COMMON_STRUCTS_H
 #define COMMON_STRUCTS_H
 
-#define CNT_PARAMETERS 10
+#define CNT_PARAMETERS 15
 
 typedef struct {
 	double x0, y0, xf, yf;
 	int xMax, yMax;
     int lStart , lEnd;
     double leftAngle , rightAngle;
+	double lConstant;
+
 	char *type;
 	int error;
 
