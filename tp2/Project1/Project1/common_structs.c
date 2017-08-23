@@ -17,7 +17,7 @@ int find_in_data(char *key,parameter_data *data) {
 }
 
 
-check_params(parameter_data *data, char *params[], int size) {
+int check_params(parameter_data *data, char *params[], int size) {
 	
 	if (data->recv_cnt > size) {
 		return 0; //excess of parameters
