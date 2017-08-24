@@ -1,3 +1,9 @@
+/**** 
+	TP 2: Fractales
+	Manuel Mollon
+	Ariel Nowik	
+	Joaquin Mestanza
+****/
 
 #include <errno.h>
 #include <string.h>
@@ -15,6 +21,9 @@
 #include "mandelbrot.h"
 #include "octogon.h"
 
+/// Esto sirve para verificar que opciones deben estar en cada modo. 
+/// Si falta o sobra alguna de las que se enlistan aqui, el programa dara error
+
 const char * manderbrot_params[] = { "type","x0","y0","xf","yf" };
 const char * triang_params[] = { "type","lstart","lend","x0","y0","leftangle","rightangle" };
 const char * octogon_params[] = { "type","lstart","lend","x0","y0","lconstant"};
@@ -27,7 +36,9 @@ int parseCallback(char* key, char* data, void* userdata);
 
 /*** Testing examples 
 	-type Octogon -lStart 300 -lEnd 30 -lConstant 0.5 -x0 450 -y0 45
+	-type triangle -lstart 400 -lend 100 -X0 400 -y0 300 -rightAngLE -30 -leftAngle 60
 ***/
+
 int main(int argv , char *argc[]){
     parameter_data data;
 	data.xMax = SCREEN_WIDTH;
@@ -108,7 +119,7 @@ int main(int argv , char *argc[]){
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 
 
-
+	/// Dibuajmos segun el modo seleccionado
 	if (strcmp(data.type, "manderbrot") == 0) {
 		draw_mandelbrot((void*)&data);
 	}else if (strcmp(data.type, "triangle") == 0) {
@@ -182,7 +193,7 @@ int parseCallback(char* key, char* data, void* userdata) {
 	}
 	udata->recv[udata->recv_cnt++] = key;
 
-	printf("[%s] = %s \n",key,data);
-	printf("udata[%d] = %s\n", udata->recv_cnt-1, udata->recv[udata->recv_cnt-1]);
+	//printf("[%s] = %s \n",key,data);
+	//printf("udata[%d] = %s\n", udata->recv_cnt-1, udata->recv[udata->recv_cnt-1]);
 	return 1;
 }

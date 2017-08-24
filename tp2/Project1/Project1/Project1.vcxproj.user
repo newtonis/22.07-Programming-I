@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommandArguments>-type Octogon -lStart 300 -lEnd 30 -lConstant 0.5 -x0 450 -y0 450</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>-type triangle -lstart 400 -lend 100 -X0 400 -y0 300 -rightAngLE -30 -leftAngle 60 -leftAngle 30</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

@@ -14,7 +14,7 @@ typedef struct {
 	char *type;
 	int error;
 
-	char *recv[CNT_PARAMETERS]; // received parameters list
+	char *recv[CNT_PARAMETERS]; // this array helps to check which parameters where inserted
 	int recv_cnt;
 
 }parameter_data; // to organize manderbrot input data

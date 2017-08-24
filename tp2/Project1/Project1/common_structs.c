@@ -4,6 +4,12 @@
 void init_data(parameter_data *data) {
 	data->error = 0;
 	data->recv_cnt = 0;
+	data->lConstant = 0;
+	data->leftAngle = 0;
+	data->lEnd = 0;
+	data->recv_cnt = 0;
+	data->rightAngle = 0;
+	data->leftAngle = 0;
 }
 
 int find_in_data(char *key,parameter_data *data) {
