@@ -13,32 +13,49 @@
 #define REPETICIONES ceil(log(info->lEnd/info->lStart)/log(info->lConstant)) //numero de veces que se debe multiplicar a lStart por lConstant para que alcanze a lEnd
 #define REP_MAX	8 //maximo de repeticiones permitidas para un tiempo razonable de espera
 
-const int octogon_color[3] = { 255,0,0 };
+const int octogon_color[20][3] = { // colores por nivel (sobran)
+	{ 255,  0,  0 },
+	{   0, 255, 0 },
+	{   0,   0,255 },
+	{ 255, 255,  0 },
+	{   0, 100,  0 },
+	{   0, 100,100 },
+	{ 100, 0  ,100 },
+	{255 ,   0,  0 },
+	{ 255
+	,  0,  0 },
+	{ 150 ,  0,  0 },
+	{ 150, 100,  0 },
+	{ 150, 100,100 }
+	
+};
 
 void draw_octogonal_fractal(parameter_data *info) {
 	double lStart = info->lStart, lEnd = info->lEnd;
 	double lConstant = info->lConstant;
 	double x0 = info->x0, y0 = info->y0;
-	ALLEGRO_COLOR color = al_map_rgb(octogon_color[0], octogon_color[1], octogon_color[2]);
+	//ALLEGRO_COLOR color = al_map_rgb(octogon_color[0], octogon_color[1], octogon_color[2]);
 
-	draw_octogonal_fractal_recursive(lStart, lEnd, lConstant, x0, y0, color);
+	draw_octogonal_fractal_recursive(lStart, lEnd, lConstant, x0, y0, 0);
 }
 
-void draw_octogonal_fractal_recursive(double lStart, double lEnd, double lConstant, double Xo, double Yo, ALLEGRO_COLOR color){
+void draw_octogonal_fractal_recursive(double lStart, double lEnd, double lConstant, double Xo, double Yo, int depth){
 	double radius = (lStart) / (2 * sin(PI / 8));
 	double offset = radius*(1 / sqrt(2));
 	if (lStart<lEnd){
 		return;
-	}else{
+	}
+	else {
+		ALLEGRO_COLOR color = al_map_rgb(octogon_color[depth][0], octogon_color[depth][1], octogon_color[depth][2]);
 		draw_octogon(Xo, Yo, radius, color); //dibujo un octagono de centro (Xo,Yo)
-		draw_octogonal_fractal_recursive(lStart*lConstant, lEnd, lConstant, Xo + radius, Yo, color); //llamo a la funcion  recursiva en los 8 vertices del octagono
-		draw_octogonal_fractal_recursive(lStart*lConstant, lEnd, lConstant, Xo + offset, Yo + offset, color);
-		draw_octogonal_fractal_recursive(lStart*lConstant, lEnd, lConstant, Xo, Yo + radius, color);
-		draw_octogonal_fractal_recursive(lStart*lConstant, lEnd, lConstant, Xo - offset, Yo + offset, color);
-		draw_octogonal_fractal_recursive(lStart*lConstant, lEnd, lConstant, Xo - radius, Yo, color);
-		draw_octogonal_fractal_recursive(lStart*lConstant, lEnd, lConstant, Xo - offset, Yo - offset, color);
-		draw_octogonal_fractal_recursive(lStart*lConstant, lEnd, lConstant, Xo, Yo - radius, color);
-		draw_octogonal_fractal_recursive(lStart*lConstant, lEnd, lConstant, Xo + offset, Yo - offset, color);
+		draw_octogonal_fractal_recursive(lStart*lConstant, lEnd, lConstant, Xo + radius, Yo, depth+1); //llamo a la funcion  recursiva en los 8 vertices del octagono
+		draw_octogonal_fractal_recursive(lStart*lConstant, lEnd, lConstant, Xo + offset, Yo + offset, depth+1);
+		draw_octogonal_fractal_recursive(lStart*lConstant, lEnd, lConstant, Xo, Yo + radius, depth+1);
+		draw_octogonal_fractal_recursive(lStart*lConstant, lEnd, lConstant, Xo - offset, Yo + offset, depth+1);
+		draw_octogonal_fractal_recursive(lStart*lConstant, lEnd, lConstant, Xo - radius, Yo, depth+1);
+		draw_octogonal_fractal_recursive(lStart*lConstant, lEnd, lConstant, Xo - offset, Yo - offset, depth+1);
+		draw_octogonal_fractal_recursive(lStart*lConstant, lEnd, lConstant, Xo, Yo - radius, depth+1);
+		draw_octogonal_fractal_recursive(lStart*lConstant, lEnd, lConstant, Xo + offset, Yo - offset, depth+1);
 	}
 }
 
