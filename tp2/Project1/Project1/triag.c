@@ -66,21 +66,24 @@ void get_three_coords(parameter_data * p2triag, bordes_t *p2aux) {
 
 }
 
-void dibujar(pos_t p1, pos_t p2, pos_t p3, double lend, int loop, double *small) {
+void dibujar(pos_t p1, pos_t p2, pos_t p3, double lend, int loop, double *small, unsigned int arr_color[][3]) {
 	// podemos pensar el triangulo como un grafo 3-ario
 	// donde cada triangulo "padre" tiene 3 "hijos" por cada nivel cada hijo se vuelve padre
 	// y cada uno de esos nuevos padres vuelve a tener 3 hijos cada uno
 
 	if (small[loop - 1]> lend) {
-		al_draw_triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, al_map_rgb(255, 0, 0), 1.0);
+
+
 		// primero dibujamos al padre
 		small[loop] = min(small[loop], lado(p1, p2, p3));
 		pos_t p4 = calculate_new_cm(p1, p2, p3);
 
 		// y despues sus hijos
-		dibujar(p1, p2, p4, lend, loop + 1, small);
-		dibujar(p2, p3, p4, lend, loop + 1, small);
-		dibujar(p1, p3, p4, lend, loop + 1, small);
+		dibujar(p1, p2, p4, lend, loop + 1, small,arr_color);
+		dibujar(p2, p3, p4, lend, loop + 1, small,arr_color);
+		dibujar(p1, p3, p4, lend, loop + 1, small,arr_color);
+
+		al_draw_triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, al_map_rgb(arr_color[loop][0], arr_color[loop][1], arr_color[loop][2]), 1.0);
 
 	}
 }
@@ -125,6 +128,20 @@ void plot_triangle(parameter_data * p2tri) {
 	for (int i = 0; i < 19; i++) {
 		profundidad[i] = 1e6;
 	}
+	unsigned int color_arr[20][3];
+	unsigned int aux=1;
+
+	srand(time(NULL));
+
+	for (int l = 0; l < 20; l++) {
+		for (int k = 0; k < 3; k++) {
+			color_arr[l][k] = rand() % 256;
+
+			printf("%u ",color_arr[l][k]);
+		}
+		printf("\n");
+	}
+	
 
 	bordes_t main_borde;
 	bordes_t *p2borde = &main_borde;
@@ -133,6 +150,6 @@ void plot_triangle(parameter_data * p2tri) {
 
 	precomputar_orden(p2borde->arriba, p2borde->derecha, p2borde->izq, p2tri->lEnd, 1, profundidad);
 
-	dibujar(p2borde->arriba, p2borde->derecha, p2borde->izq, p2tri->lEnd, 1, profundidad);
+	dibujar(p2borde->arriba, p2borde->derecha, p2borde->izq, p2tri->lEnd, 1, profundidad,color_arr);
 
 }

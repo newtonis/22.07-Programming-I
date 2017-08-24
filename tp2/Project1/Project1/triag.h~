@@ -15,7 +15,7 @@ typedef	struct {
 	pos_t derecha;
 }bordes_t;
 
-void dibujar(pos_t p1, pos_t p2, pos_t p3, double lend, int loop, double *small, unsigned int arr[][3]);
+void dibujar(pos_t p1, pos_t p2, pos_t p3, double lend, int loop, double *small);
 
 void precomputar_orden(pos_t p1, pos_t p2, pos_t p3, double lend, int loop, double *);
 

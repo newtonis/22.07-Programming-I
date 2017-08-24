@@ -37,6 +37,7 @@ int parseCallback(char* key, char* data, void* userdata);
 /*** Testing examples 
 	-type Octogon -lStart 300 -lEnd 30 -lConstant 0.5 -x0 450 -y0 45
 	-type triangle -lstart 400 -lend 100 -X0 400 -y0 300 -rightAngLE -30 -leftAngle 60
+	-type manderbrot -x0 -2 -y0 -2 -xf 2 -yf 2
 ***/
 
 int main(int argv , char *argc[]){

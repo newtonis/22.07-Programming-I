@@ -1,3 +1,5 @@
-﻿  octagon.c
+﻿  mandelbrot.c
+f:\itba_eda_tps\tp2\project1\project1\mandelbrot.c(68): warning C4101: 'test': unreferenced local variable
+f:\itba_eda_tps\tp2\project1\project1\mandelbrot.c(119): warning C4101: 'cor': unreferenced local variable
   Project1.vcxproj -> F:\ITBA_EDA_TPS\tp2\Project1\Debug\Project1.exe
   Project1.vcxproj -> F:\ITBA_EDA_TPS\tp2\Project1\Debug\Project1.pdb (Partial PDB)
