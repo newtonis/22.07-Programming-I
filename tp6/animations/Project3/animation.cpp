@@ -14,13 +14,13 @@ char& animation::get_anim_id(void)
 	return anim_id;
 }
 
-float & animation::get_anim_per(void)
+double & animation::get_anim_per(void)
 {
 	return anim_period;
 	// TODO: insertar una instrucción return aquí
 }
 
-float & animation::get_speed(void)
+double & animation::get_speed(void)
 {
 	return speed;
 	// TODO: insertar una instrucción return aquí

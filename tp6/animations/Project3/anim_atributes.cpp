@@ -87,7 +87,7 @@ void anim_atributes::atr_resolver(anim_atributes& atr,char anim_type) {
 		atr.set_anim_pre("Pictures/Homer Dance/homerdance-F");
 		atr.set_anim_im_qnt(10);
 		atr.set_period(100.0);
-		atr.set_spd(100.0);
+		atr.set_spd(10.0);
 		atr.set_sense(0);
 		break;
 	case 'E':
