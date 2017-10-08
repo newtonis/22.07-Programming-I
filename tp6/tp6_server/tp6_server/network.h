@@ -1,8 +1,13 @@
+
+
+#define _WIN32_WINNT 0x0501
+
 #ifndef NETWORK_H
 #define NETWORK_H
 
 #include "client.h"
 #include "server.h"
+
 
 class network { // handles all server/client behaviours of the computer
 	

@@ -1,6 +1,9 @@
-#include <boost/exception/diagnostic_information.hpp> 
-#include <boost/exception_ptr.hpp> 
+
 #include "client.h"
+#include <boost/asio.hpp>
+#include <boost/chrono.hpp>
+#include <boost/timer/timer.hpp>
+#include <boost/exception_ptr.hpp> 
 
 #define CLIENT_PORT "50013"
 
@@ -8,6 +11,7 @@ client::client() {
 	IO_handler = new boost::asio::io_service();
 	socket_forClient = new boost::asio::ip::tcp::socket(*IO_handler);
 	client_resolver = new boost::asio::ip::tcp::resolver(*IO_handler);
+	failure = 0;
 }
 
 client::~client() {
@@ -25,42 +29,48 @@ void client::startConnection(const char* host) {
 	cout << "Trying to connect to " << host << " on port " << CLIENT_PORT << std::endl;
 	try {
 		boost::asio::connect(*socket_forClient, endpoint);
-	}catch (const boost::exception const& e){
-		cout << "error " << boost::diagnostic_information(e) << '\n';
+		//socket_forClient->non_blocking(true);
+	}catch (std::exception const&  ex){
+		cout << "could not connect"<< '\n';
+		failure = 1;
 	}
-	socket_forClient->non_blocking(true);
 }
 
-void client::receiveMessage() {
+bool client::success() {
+	return !failure;
+}
+
+void client::receiveMessage(char *ans,int *size,int maxsize) {
 
 	boost::system::error_code error;
 	char buf[512];
 	size_t len = 0;
-	cout << "Receiving Message" << std::endl;
-	boost::timer::cpu_timer t;
-	t.start();
-	boost::timer::cpu_times pastTime = t.elapsed();
-	double elapsedSeconds = 0.0;
-	do
-	{
-		len = socket_forClient->read_some(boost::asio::buffer(buf), error);
+	
+	len = socket_forClient->read_some(boost::asio::buffer(buf), error);
 
-		boost::timer::cpu_times currentTime = t.elapsed();
-
-		if ((currentTime.wall - pastTime.wall) > 1e9)
-		{
-			elapsedSeconds += (currentTime.wall - pastTime.wall) / 1e9;
-			pastTime = currentTime;
-			cout << "Pasaron " << elapsedSeconds << " segundos." << endl;
-		}
-
-		if (!error)
-			buf[len] = '\0';
-
-	} while (error.value() == WSAEWOULDBLOCK);
-
-	if (!error)
+	if (!error) {
 		std::cout << std::endl << "Server said: " << buf << std::endl;
-	else
+	} else {
 		std::cout << "Error while trying to connect to server " << error.message() << std::endl;
+		failure = 1;
+		*size = 0;
+		return;
+	}
+	int size_buf = strlen(buf);
+	for (int i = 0; i < size_buf; i++) {
+		ans[i] = buf[i];
+	}
+	ans[size_buf] = '\0';
+	*size = size_buf;
+}
+
+void client::send_message(char *msg, int size) {
+	cout << "sending " << msg << '\n';
+
+	//cout << size << '\n';
+	size_t len;
+	boost::system::error_code error;
+
+	len = socket_forClient->write_some(boost::asio::buffer(msg, size), error);
+
 }
