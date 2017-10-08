@@ -28,13 +28,13 @@ void mostrar_secuencia(char letra) {
 
 void iniciar(vector <string> &direcciones) {
 	cout << "inciando \n";
-	int seq[MAX_MAQUINAS];
 	package_data data;
 	data.actual = 0;
 	preguntar_secuencia(&data.animation,data.seq,direcciones);
-	
+	data.cnt_maq = direcciones.size();
 
-	if (direcciones[0] == direcciones[seq[0]]) { // empiezo yo!
+	
+	if (direcciones[0] == direcciones[data.seq[0]]) { // empiezo yo!
 		mostrar_secuencia(data.animation);
 		data.actual++;
 	}
@@ -42,7 +42,7 @@ void iniciar(vector <string> &direcciones) {
 	// pasamos a la siguiente
 	{
 		client my_client;
-		my_client.startConnection(direcciones[seq[data.actual]].c_str());
+		my_client.startConnection(direcciones[data.seq[data.actual]].c_str());
 		string msg = compose_msg(data);
 		my_client.send_message(msg.c_str(), msg.size());
 	
@@ -64,7 +64,7 @@ void iniciar(vector <string> &direcciones) {
 			client my_client;
 			data.actual++;
 			if (data.actual == data.cnt_maq) data.actual = 0;
-			my_client.startConnection(direcciones[seq[data.actual]].c_str());
+			my_client.startConnection(direcciones[data.seq[data.actual]].c_str());
 			string msg = compose_msg(data);
 			my_client.send_message(msg.c_str(), msg.size());
 		}
