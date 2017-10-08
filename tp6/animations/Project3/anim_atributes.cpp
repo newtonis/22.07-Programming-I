@@ -24,6 +24,11 @@ void anim_atributes::set_spd(float  s)
 	spd = s;
 }
 
+void anim_atributes::set_sense(bool n)
+{
+	sense = n;
+}
+
 string & anim_atributes::get_anim_pre(void)
 {
 	return anim_pre;
@@ -48,6 +53,12 @@ float & anim_atributes::get_spd(void)
 	// TODO: insertar una instrucción return aquí
 }
 
+bool & anim_atributes::get_sense(void)
+{
+	return sense;
+	// TODO: insertar una instrucción return aquí
+}
+
 void anim_atributes::atr_resolver(anim_atributes& atr,char anim_type) {
 	switch (anim_type) {
 
@@ -56,37 +67,43 @@ void anim_atributes::atr_resolver(anim_atributes& atr,char anim_type) {
 		atr.set_anim_im_qnt(12);
 		atr.set_period(100.0);
 		atr.set_spd(2.0);
+		atr.set_sense(0);
 		break;
 	case 'B':
 		atr.set_anim_pre("Pictures/Explosion 1/Explosion 1-F");
 		atr.set_anim_im_qnt(8);
 		atr.set_period(120.0);
 		atr.set_spd(0.0);
+		atr.set_sense(0);
 		break;
 	case 'C':
 		atr.set_anim_pre("Pictures/Explosion 2/Explosion 2-F");
 		atr.set_anim_im_qnt(48);
 		atr.set_period(100.0);
 		atr.set_spd(0.0);
+		atr.set_sense(0);
 		break;
 	case 'D':
 		atr.set_anim_pre("Pictures/Homer Dance/homerdance-F");
 		atr.set_anim_im_qnt(10);
 		atr.set_period(100.0);
 		atr.set_spd(100.0);
+		atr.set_sense(0);
 		break;
 	case 'E':
 		atr.set_anim_pre("Pictures/Super Mario/Super Mario Running-F");
 		atr.set_anim_im_qnt(12);
 		atr.set_period(40.0);
 		atr.set_spd(2.0);
+		atr.set_sense(0);
 		break;
 
 	case 'F':
 		atr.set_anim_pre("Pictures/Sonic/Sonic Running-F");
 		atr.set_anim_im_qnt(10);
 		atr.set_period(100.0);
-		atr.set_spd(2.0);
+		atr.set_spd(17.5);
+		atr.set_sense(1);
 		break;
 	default:
 		break;

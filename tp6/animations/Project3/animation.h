@@ -18,7 +18,7 @@ public:
 	float& get_speed(void);
 	string& get_anim_prefix(void);
 	unsigned int& get_anim_cant_img(void);
-	void play_anim(int& i, float& k, float MAX_SCREEN_WIDTH, float MAX_SCREEN_HEIGHT);
+	void play_anim(char anim_type,int& i, float& k, float MAX_SCREEN_WIDTH, float MAX_SCREEN_HEIGHT, bool& sense, unsigned int img_qnt);
 	~animation();
 };
 

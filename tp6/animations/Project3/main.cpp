@@ -24,7 +24,7 @@ int main(void)
 	/*Acá se selecciona la animacion*/
 	//con las letras A B C D E F 
 
-	char anim_type = 'F';
+	char anim_type = 'A';
 
 
 	anim_atributes atr;
@@ -46,7 +46,7 @@ int main(void)
 	while (!exit) {
 		al_get_next_event(event_queue, &evs);
 		if (evs.type == ALLEGRO_EVENT_TIMER) {
-			a1.play_anim(i, k,MAX_WIDTH,MAX_HEIGHT); // vamos a modificar k e i por eso las necesitamos
+			a1.play_anim(anim_type,i, k,MAX_WIDTH,MAX_HEIGHT,atr.get_sense(),atr.get_anim_im_qnt()); // vamos a modificar k e i por eso las necesitamos
 			if (k == 0) {
 				exit = 1;
 			}

@@ -8,6 +8,7 @@ private:
 	unsigned int anim_im_qnt;
 	float period;
 	float spd;
+	bool sense;
 public:
 	anim_atributes();
 	void atr_resolver(anim_atributes& atr, char anim_type);
@@ -17,12 +18,13 @@ public:
 	void set_anim_im_qnt(unsigned int q);
 	void set_period(float p);
 	void set_spd(float s);
-
+	void set_sense(bool);
 
 	string& get_anim_pre(void);
 	unsigned int& get_anim_im_qnt(void);
 	float& get_period(void);
 	float& get_spd(void);
+	bool& get_sense(void);
 
 	~anim_atributes();
 };
