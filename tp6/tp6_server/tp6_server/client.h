@@ -22,7 +22,7 @@ class client {
 		client();
 		void startConnection(const char* host);
 		void receiveMessage(char *ans , int *size,int maxsize);
-		void send_message(char *msg, int size);
+		void send_message(const char *msg, int size);
 		~client();
 		bool success();
 

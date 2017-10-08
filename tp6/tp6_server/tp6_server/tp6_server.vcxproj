@@ -112,18 +112,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="auxiliar.cpp" />
     <ClCompile Include="client.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="network.cpp" />
+    <ClCompile Include="parser.cpp" />
     <ClCompile Include="server.cpp" />
+    <ClCompile Include="testing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="auxiliar.h" />
     <ClInclude Include="client.h" />
+    <ClInclude Include="config.h" />
     <ClInclude Include="network.h" />
+    <ClInclude Include="parser.h" />
     <ClInclude Include="server.h" />
+    <ClInclude Include="testing.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="direcciones.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -64,7 +64,7 @@ void client::receiveMessage(char *ans,int *size,int maxsize) {
 	*size = size_buf;
 }
 
-void client::send_message(char *msg, int size) {
+void client::send_message(const char *msg, int size) {
 	cout << "sending " << msg << '\n';
 
 	//cout << size << '\n';

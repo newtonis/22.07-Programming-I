@@ -1,75 +1,167 @@
-#include <iostream>
-#include "server.h"
-#include "client.h"
 
 #define _WIN32_WINNT 0x0501
+
+#include <iostream>
+#include <cstring>
+#include <vector>
+#include <time.h>
+#include "server.h"
+#include "client.h"
+#include "parser.h"
+#include "config.h"
+#include "auxiliar.h"
 
 #include "boost/asio.hpp"
 #include "boost/function.hpp"
 #include "boost/bind.hpp"
+#include <fstream>
 
 
 using namespace std;
 
-void server_test() {
-	cout << "starting server test \n";
-	
-	
 
-	cout << "waiting people to call us \n";
-	while (1) {
-		server my_server;
 
-		my_server.start_to_listen();
-
-		char ans[512];
-		int sz;
-		my_server.wait_for_message(ans,&sz);
-		cout << "sombedy said " << ans << '\n';
-
-	}
-
-	//getchar();
+void mostrar_secuencia(char letra) {
+	cout << "mostrando la secuencia " << letra << '\n';
+	Sleep(2);
 }
 
-void client_test() {
-	cout << "starting client test \n";
+void iniciar(vector <string> &direcciones) {
+	cout << "inciando \n";
+	int seq[MAX_MAQUINAS];
+	package_data data;
+	data.actual = 0;
+	preguntar_secuencia(&data.animation,data.seq,direcciones);
+	
+
+	if (direcciones[0] == direcciones[seq[0]]) { // empiezo yo!
+		mostrar_secuencia(data.animation);
+		data.actual++;
+	}
+
+	// pasamos a la siguiente
+	{
+		client my_client;
+		my_client.startConnection(direcciones[seq[data.actual]].c_str());
+		string msg = compose_msg(data);
+		my_client.send_message(msg.c_str(), msg.size());
+	
+	}
+	// esperamos que nos respondan
+	{
+		char ans[512]; int sz;
+		server my_server;
+		my_server.start_to_listen();
+		my_server.wait_for_message(ans, &sz);
+		string str_ans(ans);
+		decompose_msg(str_ans, data);
+		
+		if (data.actual == 0) {
+			/// termino la animacion!
+		} else {
+			/// debemos mostrar la animacion, y despues responder el mensaje
+			mostrar_secuencia(data.animation);
+			client my_client;
+			data.actual++;
+			if (data.actual == data.cnt_maq) data.actual = 0;
+			my_client.startConnection(direcciones[seq[data.actual]].c_str());
+			string msg = compose_msg(data);
+			my_client.send_message(msg.c_str(), msg.size());
+		}
+	}
+	cout << "ya no hay nada mas que hacer \n";
+}
+void escuchar(vector <string> &direcciones) {
+	cout << "escuchando \n";
+	/// escuchamos y respondemos
+	server my_server;
+	my_server.start_to_listen();
+	char ans[512]; int sz;
+	my_server.wait_for_message(ans, &sz);
+	string str_ans(ans);
+	package_data data;
+	decompose_msg(str_ans, data);
+
+	/// mostramos la animacion correspondiente
+
+	mostrar_secuencia(data.animation);
+
+	/// respondemos
+
+	data.actual++;
+	if (data.actual == data.cnt_maq) data.actual = 0;
 
 	client my_client;
+	my_client.startConnection(direcciones[data.seq[data.actual]].c_str());
+	string msg = compose_msg(data);
+	my_client.send_message(msg.c_str(),msg.size());
 
-	my_client.startConnection("localhost");
-	if (!my_client.success()) {
-		cout << "failure to connect \n";
-		return ;
-	}
-	char data[1000];
-	int sz = 0;
-
-	//my_client.receiveMessage(data,&sz,1000);
-	cout << "enter msg : ";
-	cin >> data;
-
-	my_client.send_message(data, strlen(data) );
-	
-
-	getchar();
+	cout << "nothing more to do \n";
 }
 
+
+int parseCallback(char *key, char *value, void *userData);
+
+class data_t {
+	public:
+		string ip;
+		int iniciar;
+		int bad;
+		data_t() : ip("0.0.0.0"), iniciar(0) , bad(0){}
+};
+
 int main(char argc , char *argv[]) {
-	if (argc == 2 && strcmp(argv[1],"client") == 0) {
-		cout << "starting as client \n";
+	vector <string> direcciones;
 
-		client_test();
+	if (!leer_direcciones(direcciones)) {
+		cout << "no se puede abrir el archivo de direcciones \n";
+		return -1;
 	}
-	else if (argc == 2 && strcmp(argv[1], "server") == 0) {
-		cout << "starting as server \n";
+	for (int i = 0; i < direcciones.size(); i++) {
+		cout << i << ' ' << direcciones[i] << '\n';
+	}
 
-		server_test();
-	}else {
-		cout << "program is not server nor client, ending \n";
-		
-		return 1;
+	data_t data;
+	
+	parseCmdLine(argc, argv , parseCallback, (void*)&data);
+
+	if (data.bad) {
+		cout << "saliendo ... \n";
+		return -1;
+	} else if (data.ip == "0.0.0.0") {
+		cout << "No se especifico IP ... \n";
+		return -1;
 	}
+
+	if (data.iniciar) {
+		cout << "comenzando como maquina que inicia \n";
+		while (1) {
+			iniciar(direcciones);
+		}
+	} else {
+		cout << "iniciando como maquina que escucha \n";
+		while (1) {
+			escuchar(direcciones);
+		}
+	}
+
 
 	cout << "ending program \n";
+}
+
+
+int parseCallback(char *key, char *value, void *userData) {
+	data_t *ud = (data_t*)userData;
+	if (strcmp(key, "ip") == 0) {
+		ud->ip = string(value);
+		cout << "setting ip to " << value << '\n';
+	}else if (strcmp(key,"iniciar") == 0) {
+		ud->iniciar = 1;
+		cout << "setting iniciar to 1 \n";
+	} else {
+		cout << "invalid parameter inserted \n";
+		ud->bad = 1;
+	}
+
+	return 1;
 }

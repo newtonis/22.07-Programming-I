@@ -1,2 +1,7 @@
-﻿  tp6_server.vcxproj -> F:\ITBA_EDA_TPS\tp6\tp6_server\Debug\tp6_server.exe
+﻿  main.cpp
+f:\itba_eda_tps\tp6\tp6_server\tp6_server\main.cpp(57): warning C4018: '<': signed/unsigned mismatch
+f:\itba_eda_tps\tp6\tp6_server\tp6_server\main.cpp(64): warning C4018: '>=': signed/unsigned mismatch
+f:\itba_eda_tps\tp6\tp6_server\tp6_server\main.cpp(71): warning C4018: '<': signed/unsigned mismatch
+f:\itba_eda_tps\tp6\tp6_server\tp6_server\main.cpp(111): warning C4018: '<': signed/unsigned mismatch
+  tp6_server.vcxproj -> F:\ITBA_EDA_TPS\tp6\tp6_server\Debug\tp6_server.exe
   tp6_server.vcxproj -> F:\ITBA_EDA_TPS\tp6\tp6_server\Debug\tp6_server.pdb (Partial PDB)
