@@ -12,7 +12,7 @@ ostream& operator<<(ostream& o,package_data& data) {
 	cout << "cantidad: " << data.cnt_maq << '\n';
 	cout << "secuencia: ";
 	for (int i = 0; i < data.cnt_maq; i++) {
-		cout << data.seq[i] << ' ' << '\n';
+		cout << data.seq[i] << ' ' ;
 	}
 	cout << "\n-------------------------------\n";
 	return o;
@@ -26,9 +26,20 @@ string compose_msg(package_data &data) {
 	for (int i = 0; i < data.cnt_maq; i++) {
 		ans.push_back(data.seq[i]);
 	}
+	cout << "SE ENVIA \n";
+	for (int i = 0; i < ans.size(); i++) {
+		cout << int(ans[i]) << ' ';
+	}
+	cout << '\n';
 	return ans;
 }
 void decompose_msg(string msg, package_data &data) {
+	cout << "SE RECIBE \n";
+	for (int i = 0; i < msg.size(); i++) {
+		cout << int(msg[i]) << ' ';
+	}
+	cout << '\n';
+
 	data.animation = msg[0];
 	data.actual = msg[1];
 	int j = 2;
