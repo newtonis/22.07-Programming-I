@@ -1,6 +1,7 @@
 #ifndef AUXILIAR_H
 #define AUXILIAR_H
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include "config.h"

@@ -26,7 +26,7 @@ void mostrar_secuencia(char letra) {
 	Sleep(2);
 }
 
-void iniciar(vector <string> &direcciones) {
+bool iniciar(vector <string> &direcciones) {
 	cout << "inciando \n";
 	package_data data;
 	data.actual = 0;
@@ -43,6 +43,10 @@ void iniciar(vector <string> &direcciones) {
 	{
 		client my_client;
 		my_client.startConnection(direcciones[data.seq[data.actual]].c_str());
+		if (!my_client.success()) {
+			cout << "could not connect, fatal error \n";
+			return 0;
+		}
 		string msg = compose_msg(data);
 		my_client.send_message(msg.c_str(), msg.size());
 	
@@ -70,8 +74,9 @@ void iniciar(vector <string> &direcciones) {
 		}
 	}
 	cout << "ya no hay nada mas que hacer \n";
+	return 1;
 }
-void escuchar(vector <string> &direcciones) {
+bool escuchar(vector <string> &direcciones) {
 	cout << "escuchando \n";
 	/// escuchamos y respondemos
 	server my_server;
@@ -93,10 +98,16 @@ void escuchar(vector <string> &direcciones) {
 
 	client my_client;
 	my_client.startConnection(direcciones[data.seq[data.actual]].c_str());
+	if (!my_client.success()) {
+		cout << "could not connect, fatal error \n";
+		return 0;
+	}
 	string msg = compose_msg(data);
 	my_client.send_message(msg.c_str(),msg.size());
 
 	cout << "nothing more to do \n";
+
+	return 1;
 }
 
 
@@ -136,12 +147,16 @@ int main(char argc , char *argv[]) {
 	if (data.iniciar) {
 		cout << "comenzando como maquina que inicia \n";
 		while (1) {
-			iniciar(direcciones);
+			if (!iniciar(direcciones)) {
+				break;
+			}
 		}
 	} else {
 		cout << "iniciando como maquina que escucha \n";
 		while (1) {
-			escuchar(direcciones);
+			if (!escuchar(direcciones)) {
+				break;
+			}
 		}
 	}
 
