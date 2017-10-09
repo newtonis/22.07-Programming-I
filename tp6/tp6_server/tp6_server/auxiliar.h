@@ -23,6 +23,7 @@ void decompose_msg(string msg, package_data &data);
 
 void preguntar_secuencia(char *letra, int seq[MAX_MAQUINAS], vector <string> &direcciones);
 int leer_direcciones(vector <string> &direcciones);
+void complete_string(string &str_ans, char* ans, int sz);
 
 
 #endif

@@ -102,3 +102,10 @@ void preguntar_secuencia(char *letra, int seq[MAX_MAQUINAS], vector <string> &di
 	}
 	cout << "}";
 }
+
+
+void complete_string(string &str_ans, char* ans, int sz) {
+	for (int i = 0; i < sz; i++) {
+		str_ans.push_back(ans[i]);
+	}
+}

@@ -63,7 +63,10 @@ bool iniciar(vector <string> &direcciones,string mi_ip) {
 		server my_server;
 		my_server.start_to_listen();
 		my_server.wait_for_message(ans, &sz);
-		string str_ans(ans);
+
+		string str_ans;
+		complete_string(str_ans, ans, sz);
+
 		decompose_msg(str_ans, data);
 		cout << "se recibio \n";
 		cout << data;
@@ -93,7 +96,9 @@ bool escuchar(vector <string> &direcciones) {
 	char ans[512]; int sz;
 	cout << "esperamos el mensaje . . . \n";
 	my_server.wait_for_message(ans, &sz);
-	string str_ans(ans);
+	string str_ans;
+	complete_string(str_ans,ans, sz);
+
 	package_data data;
 	data.cnt_maq = direcciones.size();
 	decompose_msg(str_ans, data);

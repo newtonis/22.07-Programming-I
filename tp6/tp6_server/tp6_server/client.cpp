@@ -66,8 +66,7 @@ void client::receiveMessage(char *ans,int *size,int maxsize) {
 }
 
 void client::send_message(const char *msg, int size) {
-	cout << "sending " << msg << '\n';
-
+	
 	//cout << size << '\n';
 	size_t len;
 	boost::system::error_code error;
