@@ -95,6 +95,7 @@ bool escuchar(vector <string> &direcciones) {
 	my_server.wait_for_message(ans, &sz);
 	string str_ans(ans);
 	package_data data;
+	data.cnt_maq = direcciones.size();
 	decompose_msg(str_ans, data);
 	cout << "se recibio: \n";
 	cout << data;

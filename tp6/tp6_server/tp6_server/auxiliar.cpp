@@ -6,6 +6,7 @@ using namespace std;
 
 
 ostream& operator<<(ostream& o,package_data& data) {
+	cout << "\n-------------------------------\n";
 	cout << "actual: " << data.actual << '\n';
 	cout << "animacion: " << data.animation << '\n';
 	cout << "cantidad: " << data.cnt_maq << '\n';
@@ -13,6 +14,7 @@ ostream& operator<<(ostream& o,package_data& data) {
 	for (int i = 0; i < data.cnt_maq; i++) {
 		cout << data.seq[i] << ' ' << '\n';
 	}
+	cout << "\n-------------------------------\n";
 	return o;
 }
 
