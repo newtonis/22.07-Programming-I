@@ -29,7 +29,7 @@ void mostrar_secuencia(char letra) {
 
 			}
 		}
-	}
+	 }
 }
 
 bool iniciar(vector <string> &direcciones,string mi_ip) {
