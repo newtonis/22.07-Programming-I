@@ -5,6 +5,17 @@ using namespace std;
 #include "auxiliar.h"
 
 
+ostream& operator<<(ostream& o,package_data& data) {
+	cout << "actual: " << data.actual << '\n';
+	cout << "animacion: " << data.animation << '\n';
+	cout << "cantidad: " << data.cnt_maq << '\n';
+	cout << "secuencia: ";
+	for (int i = 0; i < data.cnt_maq; i++) {
+		cout << data.seq[i] << ' ' << '\n';
+	}
+	return o;
+}
+
 
 string compose_msg(package_data &data) {
 	string ans = "";

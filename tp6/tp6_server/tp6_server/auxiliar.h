@@ -16,6 +16,7 @@ struct package_data {
 	int actual;
 	char animation;
 };
+ostream& operator<<(ostream& o, package_data& data);
 
 string compose_msg(package_data &data);
 void decompose_msg(string msg, package_data &data);
