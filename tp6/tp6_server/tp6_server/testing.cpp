@@ -10,7 +10,7 @@ void server_test() {
 
 
 	cout << "waiting people to call us \n";
-	while (1) {
+	while (1)  {
 		server my_server;
 
 		my_server.start_to_listen();
