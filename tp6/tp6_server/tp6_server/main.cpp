@@ -26,7 +26,7 @@ void mostrar_secuencia(char letra) {
 	Sleep(2);
 }
 
-bool iniciar(vector <string> &direcciones) {
+bool iniciar(vector <string> &direcciones,string mi_ip) {
 	cout << "inciando \n";
 	package_data data;
 	data.actual = 0;
@@ -34,7 +34,7 @@ bool iniciar(vector <string> &direcciones) {
 	data.cnt_maq = direcciones.size();
 
 	
-	if (direcciones[0] == direcciones[data.seq[0]]) { // empiezo yo!
+	if (mi_ip == direcciones[data.seq[0]]) { // empiezo yo!
 		cout << "soy la maquina inicial, y empiezo yo la animacion \n";
 		mostrar_secuencia(data.animation);
 		data.actual++;
@@ -161,7 +161,7 @@ int main(char argc , char *argv[]) {
 	if (data.iniciar) {
 		cout << "comenzando como maquina que inicia \n";
 		while (1) {
-			if (!iniciar(direcciones)) {
+			if (!iniciar(direcciones,data.ip)) {
 				break;
 			}
 		}
