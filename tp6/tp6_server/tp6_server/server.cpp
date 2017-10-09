@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#define HELLO_PORT 50013
+const int HELLO_PORT = 12975;
 
 
 void server::writeCompletitionCallback(const boost::system::error_code& error, std::size_t transfered_bytes) {

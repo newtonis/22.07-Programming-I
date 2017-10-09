@@ -1,11 +1,12 @@
 
 #include "client.h"
+#include <string>
 #include <boost/asio.hpp>
 #include <boost/chrono.hpp>
 #include <boost/timer/timer.hpp>
 #include <boost/exception_ptr.hpp> 
 
-#define CLIENT_PORT "50013"
+const string CLIENT_PORT = "12975";
 
 client::client() {
 	IO_handler = new boost::asio::io_service();
