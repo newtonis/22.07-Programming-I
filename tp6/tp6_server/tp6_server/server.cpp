@@ -52,7 +52,7 @@ server::server() {
 	socket_forServer = new boost::asio::ip::tcp::socket(*IO_handler);
 	server_acceptor = new boost::asio::ip::tcp::acceptor(*IO_handler,
 		boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), HELLO_PORT));
-	//std::cout << std::endl << "Ready. Port " << HELLO_PORT << " created" << std::endl;
+	cout << std::endl << "Ready. Port " << HELLO_PORT << " created" << std::endl;
 }
 void server::close_connection() {
 	server_acceptor->close();

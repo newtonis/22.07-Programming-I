@@ -23,7 +23,13 @@ using namespace std;
 
 void mostrar_secuencia(char letra) {
 	cout << "mostrando la secuencia " << letra << '\n';
-	Sleep(2);
+	for (int i = 0; i < 1000; i++) {
+		for (int j = 0; j < 1000; j++) {
+			for (int z = 0; z < 100; z++) {
+
+			}
+		}
+	}
 }
 
 bool iniciar(vector <string> &direcciones,string mi_ip) {
