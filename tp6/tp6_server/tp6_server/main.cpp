@@ -15,6 +15,7 @@
 #include "boost/function.hpp"
 #include "boost/bind.hpp"
 #include <fstream>
+#include <time.h>
 
 
 using namespace std;
@@ -23,13 +24,8 @@ using namespace std;
 
 void mostrar_secuencia(char letra) {
 	cout << "mostrando la secuencia " << letra << '\n';
-	for (int i = 0; i < 1000; i++) {
-		for (int j = 0; j < 1000; j++) {
-			for (int z = 0; z < 100; z++) {
-
-			}
-		}
-	 }
+	
+	Sleep(2000);
 }
 
 bool iniciar(vector <string> &direcciones,string mi_ip) {
@@ -84,11 +80,13 @@ bool iniciar(vector <string> &direcciones,string mi_ip) {
 			client my_client;
 			data.actual++;
 			if (data.actual == data.cnt_maq) data.actual = 0;
-			my_client.startConnection(direcciones[data.seq[data.actual]].c_str());
-			string msg = compose_msg(data);
-			cout << "se esta enviando \n";
-			cout << data;
-			my_client.send_message(msg.c_str(), msg.size());
+			if (data.actual != 0) {
+				my_client.startConnection(direcciones[data.seq[data.actual]].c_str());
+				string msg = compose_msg(data);
+				cout << "se esta enviando \n";
+				cout << data;
+				my_client.send_message(msg.c_str(), msg.size());
+			}
 		}
 	}
 	cout << "ya no hay nada mas que hacer \n";
