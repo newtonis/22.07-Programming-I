@@ -26,19 +26,19 @@ string compose_msg(package_data &data) {
 	for (int i = 0; i < data.cnt_maq; i++) {
 		ans.push_back(data.seq[i]);
 	}
-	cout << "SE ENVIA \n";
+	/*cout << "SE ENVIA \n";
 	for (int i = 0; i < ans.size(); i++) {
 		cout << int(ans[i]) << ' ';
 	}
-	cout << '\n';
+	cout << '\n';*/
 	return ans;
 }
 void decompose_msg(string msg, package_data &data) {
-	cout << "SE RECIBE \n";
+	/*cout << "SE RECIBE \n";
 	for (int i = 0; i < msg.size(); i++) {
 		cout << int(msg[i]) << ' ';
 	}
-	cout << '\n';
+	cout << '\n';*/
 
 	data.animation = msg[0];
 	data.actual = msg[1];
@@ -56,9 +56,9 @@ int leer_direcciones(vector <string> &direcciones) {
 		return 0;
 	}
 	string line;
-
+	//cout << "direcciones leidas: \n";
 	while (getline(myfile, line)) {
-		cout << line << '\n';
+		//cout << line << '\n';
 		direcciones.push_back(line);
 	}
 

@@ -58,11 +58,14 @@ bool iniciar(vector <string> &direcciones,string mi_ip) {
 		my_client.send_message(msg.c_str(), msg.size());
 	
 	}
+	if (mi_ip == direcciones[data.seq[0]]) {
+		return 1; // exito!	
+	}
 	// esperamos que nos respondan
 	{
 		char ans[512]; int sz;
 		//cout << "Empezamos a escuchar, nos quedamos esperando a recibir un mensaje \n";
-		cout << "escuchando" << '\n';
+		//cout << "escuchando" << '\n';
 		server my_server;
 		my_server.start_to_listen();
 		my_server.wait_for_message(ans, &sz);
@@ -73,22 +76,20 @@ bool iniciar(vector <string> &direcciones,string mi_ip) {
 		decompose_msg(str_ans, data);
 		//cout << "se recibio \n";
 		//cout << data;
-		if (data.actual == 0) {
-			/// termino la animacion!
-		} else {
-			/// debemos mostrar la animacion, y despues responder el mensaje
-			mostrar_secuencia(data.animation);
-			client my_client;
-			data.actual++;
-			if (data.actual == data.cnt_maq) data.actual = 0;
-			if (data.actual != 0) {
-				my_client.startConnection(direcciones[data.seq[data.actual]].c_str());
-				string msg = compose_msg(data);
-				//cout << "se esta enviando \n";
-				//cout << data;
-				my_client.send_message(msg.c_str(), msg.size());
-			}
+		
+		/// debemos mostrar la animacion, y despues responder el mensaje
+		mostrar_secuencia(data.animation);
+		client my_client;
+		data.actual++;
+		if (data.actual == data.cnt_maq) data.actual = 0;
+		if (data.actual != 0) {
+			my_client.startConnection(direcciones[data.seq[data.actual]].c_str());
+			string msg = compose_msg(data);
+			//cout << "se esta enviando \n";
+			//cout << data;
+			my_client.send_message(msg.c_str(), msg.size());
 		}
+		
 	}
 	//cout << "ya no hay nada mas que hacer \n";
 	return 1;
@@ -116,7 +117,7 @@ bool escuchar(vector <string> &direcciones) {
 	/// respondemos
 
 	data.actual++;
-	if (data.actual == data.cnt_maq) data.actual = 0;
+	if (data.actual == data.cnt_maq) return 1; // no need to respond message
 
 	client my_client;
 	my_client.startConnection(direcciones[data.seq[data.actual]].c_str());

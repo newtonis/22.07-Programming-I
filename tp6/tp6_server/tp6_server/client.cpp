@@ -16,7 +16,7 @@ client::client() {
 }
 
 client::~client() {
-	cout << "closing client\n";
+	//cout << "closing client\n";
 	socket_forClient->close();
 	delete client_resolver;
 	delete socket_forClient;
@@ -27,7 +27,7 @@ void client::startConnection(const char* host) {
 	endpoint = client_resolver->resolve(
 		boost::asio::ip::tcp::resolver::query(host, CLIENT_PORT));
 
-	cout << "Trying to connect to " << host << " on port " << CLIENT_PORT << std::endl;
+	//cout << "Trying to connect to " << host << " on port " << CLIENT_PORT << std::endl;
 	try {
 		boost::asio::connect(*socket_forClient, endpoint);
 		//socket_forClient->non_blocking(true);
@@ -50,9 +50,9 @@ void client::receiveMessage(char *ans,int *size,int maxsize) {
 	len = socket_forClient->read_some(boost::asio::buffer(buf), error);
 
 	if (!error) {
-		std::cout << std::endl << "Server said: " << buf << std::endl;
+		//std::cout << std::endl << "Server said: " << buf << std::endl;
 	} else {
-		std::cout << "Error while trying to connect to server " << error.message() << std::endl;
+		//std::cout << "Error while trying to connect to server " << error.message() << std::endl;
 		failure = 1;
 		*size = 0;
 		return;
