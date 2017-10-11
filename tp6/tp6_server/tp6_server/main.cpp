@@ -10,6 +10,11 @@
 #include "parser.h"
 #include "config.h"
 #include "auxiliar.h"
+#include "animation.h"
+#include "anim_atributes.h"
+#include <allegro5\allegro_acodec.h>
+#include <allegro5\allegro_audio.h>
+
 
 #include "boost/asio.hpp"
 #include "boost/function.hpp"
@@ -20,12 +25,21 @@
 
 using namespace std;
 
+const float MAX_WIDTH = 1280.0;
+const float MAX_HEIGHT = 720.0;
+
+int allegro_init();
+bool blocking_anim(char letra, double width, double height);
 
 
-void mostrar_secuencia(char letra) {
+void mostrar_secuencia(char& letra) {
 	cout << "mostrando la secuencia " << letra << '\n';
-	
-	Sleep(2000);
+	if (blocking_anim(letra, MAX_WIDTH, MAX_HEIGHT)) {
+		cout << "la animacion " << letra << " se pudo realizar satisfactoriamente!" << endl;
+	}
+	else {
+		cout << "hubo un error al tratar de reproducir animacion " << letra << " " << endl;
+	}		
 }
 
 bool iniciar(vector <string> &direcciones,string mi_ip) {
@@ -148,6 +162,12 @@ class data_t {
 };
 
 int main(char argc , char *argv[]) {
+
+	//iniciliazacion de allegro
+	if (allegro_init() == -1) {
+		return -1;
+	}
+
 	vector <string> direcciones;
 
 	if (!leer_direcciones(direcciones)) {
@@ -188,6 +208,7 @@ int main(char argc , char *argv[]) {
 
 
 	cout << "ending program \n";
+	return 0;
 }
 
 
@@ -205,4 +226,68 @@ int parseCallback(char *key, char *value, void *userData) {
 	}
 
 	return 1;
+}
+
+
+int allegro_init(void) {
+	if (!al_init()) {
+		return -1;
+	}
+	if (!al_install_keyboard())
+	{
+		return -1;
+	}
+
+	if (!al_init_image_addon()) {
+		return -1;
+	}
+
+	if (!al_install_audio()) {
+		return -1;
+	}
+
+	if (!al_init_acodec_addon()) {
+		return -1;
+	}
+
+	if (!al_reserve_samples(1)) {
+		return -1;
+	}
+	return 0;
+}
+
+bool blocking_anim(char letra, double width, double height) {
+	ALLEGRO_DISPLAY * display = nullptr;
+	ALLEGRO_SAMPLE * music = nullptr;
+
+	display = al_create_display(width, height);
+	if (display == nullptr) {
+		return -1;
+	}
+
+	music = al_load_sample("Music/shooting_stars.wav");
+	if (!music) {
+		al_destroy_display(display);
+		return -1;
+	}
+
+	al_play_sample(music, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+
+	anim_atributes atr;
+	atr.atr_resolver(atr, letra);
+	animation a1(letra, atr.get_anim_pre(), atr.get_anim_im_qnt(), atr.get_period(), atr.get_spd());
+	a1.load_imgs(a1.get_anim_cant_img(), a1.get_anim_prefix(), a1.p2anim_lib, a1.background);
+
+
+	int i = 0;	float k = a1.get_speed(); bool exit = 0;
+
+	while (!exit) {
+		a1.play_anim(letra, i, k, width, height, atr.get_sense(), atr.get_anim_im_qnt());
+		al_rest(atr.get_period() / 1000.0); // queremos milisegundos
+		if (k == 0) exit = 1;
+	}
+
+	al_destroy_display(display);
+	al_destroy_sample(music);
+
 }
